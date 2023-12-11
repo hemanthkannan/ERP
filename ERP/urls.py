@@ -28,5 +28,4 @@ urlpatterns = [
     path('invoice/', invoice_view, name='invoice'),
     path('taxinvoiceform/', tax_invoice_form, name='tax_invoice_form'),
     path('print_invoice/', print_invoice, name='print_invoice'),
-    path('print/', print, name='print')
 ]

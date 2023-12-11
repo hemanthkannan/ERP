@@ -6,7 +6,6 @@ from django.template import loader
 from django.template.loader import get_template
 from django.template import Context
 import inflect
-import From_date
 
 
 def LR_VIEW(request):
