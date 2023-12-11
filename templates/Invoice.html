@@ -1,0 +1,230 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/invoice.css' %}">
+    <title>Centered Text</title>
+</head>
+<body class="body">
+    <div class="main-outer-container">
+        <div class="flex-container">
+            <div class="flex-box Tax-Invoice-Box">TAX INVOICE</div>
+        </div>
+
+
+        <div class="flex-container">
+            <div class="flex-box Suriya-Carriers-Box">
+                <div class="suriya_inner-container">
+                    <div class="suriya-flex Comapany-name">SURIYA CARRIERS</div>
+                    <div class="suriya-flex Comapany-GSTIN">GSTIN/UIN: <span class="All-text">33AIHPK0371R2ZY</span></div>
+                    <div class="suriya-flex Comapany-PAN">PAN IT NO: <span class="All-text">AIHPK0371R</span></div>
+
+                </div>
+                <div class="suriya_inner-container">
+                    <div class="suriya-flex  Comapany-Address">No: 66/1A, Kannusamy Street,Sanganoor Main Road, Rathinapuri(P.O), Coimbatore-641027</div>
+                </div>
+            </div>
+            
+            <div class="flex-box Invoice-Number-Box">
+                <div class="Invoice-Inner-Container">
+                    <div class="Invoice-flex Invoice-Date">Dated: <span class="All-text">10-08-2021</span></div>
+                    <div class="Invoice-flex Comapany-Invoice_Title">Invoice Number</div>
+                    <div class="Invoice-flex Comapany-Invoice_No">086/2021-2022</div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="flex-container">
+            <div class="flex-box Freigt-billedto-box">
+                <div class="ClientName-container">
+                    <div class="ClientName-flex billedto-title">FREIGHT BILLED TO:</div>
+                    <div class="ClientName-flex billedto-name">{{freight_billed_to}}</div>
+                </div>
+            </div>
+            <div class="flex-box Shipped_from-box">
+                <div class="ClientName-container">
+                    <div class="ClientName-flex billedto-title">SHIPPED FROM:</div>
+                    <div class="ClientName-flex billedto-name">{{shipped_from}}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-box Billedto-Address-box">
+                <div class="Address-container">
+                    <div class="Address-flex Address-title">ADDRESS:</div>
+                    <div class="Address-flex Address-name">{{consignee_addr_combined}}</div>
+                </div>
+            </div>
+            <div class="flex-box From-Address-box">
+                <div class="Address-container">
+                    <div class="Address-flex Address-title">ADDRESS:</div>
+                    <div class="Address-flex Address-name">{{consignor_addr_combined}}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-box Billedto-State-box">
+                <div class="State-container">
+                    <div class="State-flex State-title">STATE:</div>
+                    <div class="State-flex State-name">{{consignee_state}}</div>
+                </div>
+            </div>
+            <div class="flex-box From-State-box">
+                <div class="State-container">
+                    <div class="State-flex State-title">STATE:</div>
+                    <div class="State-flex State-name">{{consignor_state}}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-box Billedto-Gstin-box">
+                <div class="Gstin-container">
+                    <div class="Gstin-flex Gstin-title">GSTIN/UIN:</div>
+                    <div class="Gstin-flex Gstin-name">M/S. AQUASUB ENGINEERING(CTR)</div>
+                </div>
+            </div>
+            <div class="flex-box From-Gstin-box">
+                <div class="Gstin-container">
+                    <div class="Gstin-flex Gstin-title">GSTIN/UIN:</div>
+                    <div class="Gstin-flex Gstin-name">M/S. AQUASUB ENGINEERING(CTR)</div>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <div class="flex-container">
+            <table class="invoice-table">
+                <!-- Table header row -->
+                <thead>
+
+                    <tr>
+                        <!-- Dynamic headers set in HTML -->
+                        <th class="SNo-Header">S.No</th>
+                        <th class="Date-Header">L.R Date</th>
+                        <th class="LRNo-Header">L.R No</th>
+                        <th class="Vehicle-Header">Vehicle No</th>
+                        <th class="Article-Header">Articles</th>
+                        <th class="Weight-Header">Weight</th>
+                        <th class="Rate-Header">Rate</th>
+                        <th class="Stat-Header">Stat Chg</th>
+                        <th class="Total-Header">Total Amount</th>
+                    </tr>
+                </thead>
+
+                <!-- Iterate through records and display employee data -->
+                {% for invoice in records %}
+                <tbody>
+                    <tr>
+                        <!-- Data from records with different styles and sizing -->
+                        <td class="id-cell">{{ invoice.S_NO}}</td>
+                        <td class="date-cell">{{ invoice.lr_hire_date}}</td>
+                        <td class="LRNo-cell">{{ invoice.lr_number}}</td>
+                        <td class="Vehicle-cell">{{ invoice.lorry_reg_number}}</td>
+                        <td class="Article-cell">{{ invoice.LR_no_of_packages}}</td>
+                        <td class="Weight-cell">{{ invoice.LR_weight}}</td>
+                        <td class="Rate-cell">{{ invoice.LR_Rate}}</td>
+                        <td class="Statchg-cell">{{ invoice.stat_chg}}</td>
+                        <td class="Total-cell">{{ invoice.total_amount}}</td>
+                        
+                    </tr>
+                </tbody>
+                {% endfor %}
+                <tfoot>
+                    <tr>
+                        <td colspan="3" align="right">RCM 5%</td>
+                        <td> TOTAL </td>
+                        <td> {{LR_no_of_packages}} </td>
+                        <td> {{LR_weight}} </td>
+                        <td colspan="4" align="right">{{total_amount}} </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="Amount_word_container">
+            <div class="titleword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
+            <div class="titleword_box amountwords-container">{{word_expand}}</div>
+        </div>
+
+        <table class="GST_TABLE" >
+            <thead>
+                <tr>
+                    <td>HSN/SAC</td>
+                    <td>TAXABLE VALUE</td>
+                    <td colspan="2">CGST</td>
+                    <td colspan="2">SGST</td>
+                    <td colspan="2">IGST</td>
+                    <td>TOTAL TAX AMOUNT</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>RATE</td>
+                    <td>AMOUNT</td>
+                    <td>RATE</td>
+                    <td>AMOUNT</td>
+                    <td>RATE</td>
+                    <td>AMOUNT</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>9965</td>
+                    <td>{{total_amount}}</td>
+                    <td>{{CGST_RATE}}</td>
+                    <td>{{CGST_AMOUNT}}</td>
+                    <td>{{SGST_RATE}}</td>
+                    <td>{{SGST_AMOUNT}}</td>
+                    <td>{{IGST_RATE}}</td>
+                    <td>{{IGST_AMOUNT}}</td>
+                    <td>{{TOTAL_AMOUNT_GST}}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="Tax_word_container">
+            <div class="Taxword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
+            <div class="Taxword_box amountwords-container">{{GST_word_expand}}</div>
+        </div>
+
+        <div class="Reverse_charge amountwords-container">Amount of Tax Subjeft to Reverse Charge</div>
+
+
+
+        <div class="wrapper">
+            <div class="side-by-side">
+                <div class="box Preparedby-first-box"><p>Prepared by</p></div>
+                <div class="box Preparedby-second-box"><p>{{Prepared_by}}</p></div>
+            </div>
+            <div class="side-by-side">
+                <div class="box Cutomer-seal-first-box"><p>Customer's seals and signature:</p></div>
+                <div class="box Cutomer-seal-second-box">
+                    <div class="inner_wrapper">
+                        <div class="inner_box ForSreeman-first-box">For SREEMAN TRANSPORTS (2023-2024)</div>
+                        <div class="inner_box Authorized-second-box">Authorized Signatory</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="full-width">
+                <div class="box Certified_box">Certified that the GST on GTA service is Paid by the consignor or Consignee of the goods in terms of notification No 13/2017 Central tax (Rate) dt 28.06.2017 and that no input tax credit is availed by us</div>
+            </div>
+        </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!-- Tax_invoice_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tax Invoice Form</title>
+    <link rel="stylesheet" href="{% static 'css/tax_invoice_form.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Tax Invoice Form</h1>
+        <form action="{% url 'tax_invoice_form' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="company-section">
+                <label>Company Name:</label>
+                <div class="company-options">
+                    <input type="radio" id="sreeman" name="company" value="Sreeman">
+                    <label for="sreeman">Sreeman</label>
+                    <input type="radio" id="suriya" name="company" value="Suriya">
+                    <label for="suriya">Suriya</label>
+                </div>
+            </div>
+
+            <div class="date-section">
+                <label for="from_date">From Date:</label>
+                <input type="date" id="from_date" name="from_date">
+                
+                <label for="to_date">To Date:</label>
+                <input type="date" id="to_date" name="to_date">
+            </div>
+
+            <div class="additional-elements">
+                <td><button name="fetch">Fetch</button></td>
+                <td>You have logged in to {{company_name}}</td>
+            </div>
+
+            <div class="gst-section">
+                <label>Select the Option for GST</label>
+                <div class="gst-options">
+                    <input type="radio" id="within-state" name="GSTselection" value="Withinstate">
+                    <label for="within-state">Within-State</label>
+                    <input type="radio" id="outside-state" name="GSTselection" value="Outsidestate">
+                    <label for="outside-state">Outside-State</label>
+                </div>
+            </div>
+
+            <div class="invoice-details">
+                <label for="invoiceNumber">Enter the Invoice Number:</label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber">
+
+                <label for="dateInput">Select a Date:</label>
+                <input type="date" id="dateInput" name="dateInput">
+
+                <label for="freight">Freight billed to:</label>
+                <input list="freight_list" id="freight" name="freight">
+                <datalist id="freight_list">
+                    {% for option in freight_billed_to %}
+                        <option value="{{ option }}"></option>
+                    {% endfor %}
+                </datalist>
+
+                <label for="shipped_from">Shipped from:</label>
+                <input list="shipped_from_list" id="shipped_from" name="shipped_from">
+                <datalist id="shipped_from_list">
+                    {% for inc in shipped_from %}
+                        <option value="{{ inc }}"></option>
+                    {% endfor %}
+                </datalist>
+
+                <label for="prepared_by">Prepared by:</label>
+                <select name="prepared_by" class="prepared-by-dropdown">
+                    <option value="C.Nagaraj">C.Nagaraj</option>
+                    <option value="S.L.Praveen">S.L.Praveen</option>
+                    <option value="L.MaryJosephine">L.MaryJosephine</option>
+                </select>
+            </div>
+
+            <button name="invoice_print" type="submit">Print</button>
+        </form>
+    </div>
+</body>
+</html>

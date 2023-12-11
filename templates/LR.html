@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Centered Text</title>
+</head>
+<body>
+    <div class="Main-border">
+        <div class="flex-container">
+            <div class="flex-box box1">CONSIGNOR COPY</div>
+        </div>
+        
+        <div class="flex-container">
+            <div class="flex-box box2">GOODS CONSIGNMENT NOTE</div>
+            <div class="flex-box box3">PAN:AIHPK0371R</div>
+            <div class="flex-box box4">GSTIN:33AIHPK0371R2ZY</div>
+            <div class="flex-box box5">SUBJECT TO COIMBATORE JURIDICTION</div>
+        </div>
+        
+        <div class="flex-container">
+            <div class="flex-box box6">6
+                <div class="inner-container6">
+                    <div class="flex-box2 No">NO&emsp;&emsp;&emsp; :</div>
+                    <div class="flex-box2 From">FROM&emsp;&emsp;:</div>
+                </div>
+                <div class="inner-container6">
+                    <div class="flex-box2 Date">DATE&emsp;&emsp;:</div>
+                    <div class="flex-box2 To">TO&emsp;&emsp;&emsp;&ensp;:</div>
+                </div>
+                
+                
+            </div>
+            <div class="flex-box box7">7</div>
+        </div>
+        
+        <div class="flex-container">
+            <div class="flex-box box8">8</div>
+            <div class="flex-box box9">9</div>
+        </div>
+        <div class="flex-container">
+            <table class="employee-table">
+                <!-- Table header row -->
+                <tr>
+                    <!-- Dynamic headers set in HTML -->
+                    <th class="Id-cell-Header">ID</th>
+                    <th class="Id-name-Header">Name</th>
+                    <th class="Id-Age-Header">Age</th>
+                    <th class="Id-Salary-Header">Salary</th>
+                </tr>
+        
+                <!-- Iterate through records and display employee data -->
+                {% for employee in records %}
+                <tr>
+                    <!-- Data from records with different styles and sizing -->
+                    <td class="id-cell">{{ employee.Id }}</td>
+                    <td class="name-cell">{{ employee.Emp_name }}</td>
+                    <td class="age-cell">{{ employee.Emp_age }}</td>
+                    <td class="salary-cell">{{ employee.Emp_salary }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        
+        </div>
+        
+        <div class="bottom-container">
+            <div class="bottom-box DeliveryAt">SUBJECT TO COIMBATORE JURIDICTION</div>
+        </div>
+        <div class="bottom-container">
+            <div class="bottom-box Door">GOODS CONSIGNMENT NOTE</div>
+            <div class="bottom-box Term-condition">PAN:AIHPK0371R</div>
+            <div class="bottom-box For-suriya">GSTIN:33AIHPK0371R2ZY</div>
+            
+        </div>
+        <div class="bottom-container">
+            <div class="bottom-box Certified">SUBJECT TO COIMBATORE JURIDICTION</div>
+        </div>
+    </div>
+   
+
+
+</body>
+</html>
+
+
+
