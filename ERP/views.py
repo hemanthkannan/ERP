@@ -112,21 +112,21 @@ def tax_invoice_form(request):
 
             filtered_df = df[(df['from_branch']==shipped_from) & (df['to_branch']==freight_billed_to)]
 
-            df2=filtered_df.groupby(['Company','gdm_no','lr_hire_date','lr_number','lorry_reg_number','LR_party_invoice','from_branch','to_branch','LR_no_of_packages','LR_weight','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state'])['LR_Rate'].unique().reset_index().explode('LR_Rate')
-            df3=df2.groupby(['Company','gdm_no','lr_hire_date','lr_number','lorry_reg_number','from_branch','to_branch','LR_weight','LR_Rate','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state']).agg({'LR_no_of_packages':'sum'}).reset_index()
-            df4=df3[['Company','gdm_no','from_branch','to_branch','lr_hire_date','lr_number','lorry_reg_number','LR_no_of_packages','LR_weight','LR_Rate','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state']]
+            df2=filtered_df.groupby(['Company','gdm_no','lr_hire_date','lr_number','lorry_reg_number','LR_party_invoice','from_branch','to_branch','LR_no_of_packages','LR_weight','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state','consignee_gstin','consignor_gstin'])['LR_Rate'].unique().reset_index().explode('LR_Rate')
+            df3=df2.groupby(['Company','gdm_no','lr_hire_date','lr_number','lorry_reg_number','from_branch','to_branch','LR_weight','LR_Rate','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state','consignee_gstin','consignor_gstin']).agg({'LR_no_of_packages':'sum'}).reset_index()
+            df4=df3[['Company','gdm_no','from_branch','to_branch','lr_hire_date','lr_number','lorry_reg_number','LR_no_of_packages','LR_weight','LR_Rate','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state','consignee_gstin','consignor_gstin']]
 
             df4['S_NO']=df4['s.no'] = range(1, len(df4) + 1)
             df4['stat_chg']=15
             df4['total_amount']=round((df4["LR_weight"]*df4["LR_Rate"])+df4["stat_chg"])
             
-
+            consignor_gstin=df4['consignor_gstin'].unique()[0]
             consignor_addr=df4['consignor_addr'].unique()[0]
             consignor_pincode=df4['consignor_pincode'].unique()[0]
             consignor_state=df4['consignor_state'].unique()[0]
             from_city=df4['from_city'].unique()[0]
 
-
+            consignee_gstin=df4['consignee_gstin'].unique()[0]
             consignee_addr=df4['consignee_addr'].unique()[0]
             consignee_pincode=df4['consignee_pincode'].unique()[0]
             consignee_state=df4['consignee_state'].unique()[0]
@@ -135,11 +135,10 @@ def tax_invoice_form(request):
             consignor_addr_combined=consignor_addr.lower().capitalize()+" "+from_city.upper()+" "+consignor_pincode
             consignee_addr_combined=consignee_addr.lower().capitalize()+" "+to_city.upper()+" "+consignee_pincode
 
-
-            
-            print('*************',consignor_addr_combined)
-            print('*************',consignee_addr_combined)
-
+            print('*************',consignor_gstin)
+            print('*************',consignee_gstin)
+            df4['LR_weight']=df4['LR_weight'].astype(int)
+            df4['total_amount']=df4['total_amount'].astype(int)
             LR_no_of_packages=df4['LR_no_of_packages'].sum()
             LR_weight=df4['LR_weight'].sum()
             total_amount=df4['total_amount'].sum()
@@ -190,6 +189,8 @@ def tax_invoice_form(request):
                         'shipped_from': shipped_from,
                         'company_name':Company_name,
                         'records':records,
+                        'consignor_gstin':consignor_gstin,
+                        'consignee_gstin':consignee_gstin,
                         'consignor_addr_combined':consignor_addr_combined,
                         'consignee_addr_combined':consignee_addr_combined,
                         'consignor_state':consignor_state,
