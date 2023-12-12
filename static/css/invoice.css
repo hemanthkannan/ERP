@@ -19,6 +19,7 @@
     line-height: 110px;
     border:2px solid black;
     
+    
   }
   
   .Tax-Invoice-Box{
@@ -31,6 +32,7 @@
     border-top:none;
     border-bottom:none;
     
+    
   
   }
   
@@ -39,6 +41,7 @@
     border-left: none;
     border-right: none;
     border-bottom: none;
+    
   }
   
   .Invoice-Number-Box{
@@ -68,6 +71,7 @@
     line-height:20px;
     font-weight:bold;
     font-size: 13px;
+    
   }
   
   .Comapany-GSTIN{
@@ -166,12 +170,14 @@
   .Address-container{
     display:flex;
     border-left:none;
+    
   }
 
   .Address-flex{
     flex:1;
     height:30px;
     line-height: 10px;
+    
    
     
   }
@@ -326,6 +332,7 @@
 .invoice-table tfoot tr td:first-child{
     border-left:none;
     text-align: left;
+    background-color: aqua;
 }
 
 
@@ -345,7 +352,6 @@
 }
 
 .titleword_box{
-  
   flex:1;
   border:1px solid black;
   border-left:none;
@@ -354,7 +360,13 @@
 }
 
 .amountwords-container{
+  flex:0.2;
   border-right:none;
+  
+}
+
+.amounttitle-container{
+  flex:0.8;
 }
 
 .GST_TABLE{
@@ -512,6 +524,7 @@ top:-15px;
   font-size:13px;
   top:10px;
   left:50px;
+  
 
 }
 
