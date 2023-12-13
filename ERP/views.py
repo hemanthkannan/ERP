@@ -117,9 +117,11 @@ def tax_invoice_form(request):
             df4=df3[['Company','gdm_no','from_branch','to_branch','lr_hire_date','lr_number','lorry_reg_number','LR_no_of_packages','LR_weight','LR_Rate','consignor_addr','from_city','consignor_pincode','consignor_state','consignee_addr','to_city','consignee_pincode','consignee_state','consignee_gstin','consignor_gstin']]
 
             df4['S_NO']=df4['s.no'] = range(1, len(df4) + 1)
-            df4['stat_chg']=15
+            df4['stat_chg']=15.00
             df4['total_amount']=round((df4["LR_weight"]*df4["LR_Rate"])+df4["stat_chg"])
-            
+
+
+            df4.to_excel('sdfsd.xlsx')
             consignor_gstin=df4['consignor_gstin'].unique()[0]
             consignor_addr=df4['consignor_addr'].unique()[0]
             consignor_pincode=df4['consignor_pincode'].unique()[0]
@@ -135,8 +137,6 @@ def tax_invoice_form(request):
             consignor_addr_combined=consignor_addr.lower().capitalize()+" "+from_city.upper()+" "+consignor_pincode
             consignee_addr_combined=consignee_addr.lower().capitalize()+" "+to_city.upper()+" "+consignee_pincode
 
-            print('*************',consignor_gstin)
-            print('*************',consignee_gstin)
             df4['LR_weight']=df4['LR_weight'].astype(int)
             df4['total_amount']=df4['total_amount'].astype(int)
             LR_no_of_packages=df4['LR_no_of_packages'].sum()
@@ -181,9 +181,15 @@ def tax_invoice_form(request):
 
             final_df=df4[['S_NO','lr_hire_date','lr_number','lorry_reg_number','LR_no_of_packages','LR_weight','LR_Rate','stat_chg','total_amount']]
             # Convert DataFrame records to a list of dictionaries
+            final_df['lr_hire_date'] = pd.to_datetime(final_df['lr_hire_date'])
+            final_df['lr_hire_date'] = final_df['lr_hire_date'].dt.strftime('%d-%m-%Y')
+            final_df['LR_Rate']=final_df['LR_Rate'].map("{:.2f}".format)
+            final_df['total_amount']=final_df['total_amount'].map("{:.2f}".format)
+            total_amount = "{:.2f}".format(total_amount)
+            final_df['stat_chg']=final_df['stat_chg'].map("{:.2f}".format)
+            
             records = final_df.to_dict(orient='records')
-
-
+            
             context = {
                         'freight_billed_to': freight_billed_to,
                         'shipped_from': shipped_from,
