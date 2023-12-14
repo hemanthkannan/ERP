@@ -30,9 +30,9 @@
             
             <div class="flex-box Invoice-Number-Box">
                 <div class="Invoice-Inner-Container">
-                    <div class="Invoice-flex Invoice-Date">Dated: <span class="All-text">10-08-2021</span></div>
+                    <div class="Invoice-flex Invoice-Date">Dated: <span class="All-text">{{dateInput}}</span></div>
                     <div class="Invoice-flex Comapany-Invoice_Title">Invoice Number</div>
-                    <div class="Invoice-flex Comapany-Invoice_No">086/2021-2022</div>
+                    <div class="Invoice-flex Comapany-Invoice_No">{{Invoice_number}}</div>
                 </div>
             </div>
         </div>
@@ -202,9 +202,17 @@
             <div class="Taxword_box amountwords-container">{{GST_word_expand}}</div>
         </div>
 
-        <div class="Reverse_charge amountwords-container">Amount of Tax Subjeft to Reverse Charge</div>
+        <div class="Reverse_charge">Amount of Tax Subjeft to Reverse Charge</div>
+        
+        <div class="Bank_info">
+            <div class="Bank-details">Bank Details:</div>
+            <div class="Account-name">Account name: <span class="bold_text">{{Company_Name_Display}}</span></div>
+            <div class="Account-no">Account no: <span class="bold_text">{{Account_No}}</span></div>
+            <div class="Bank-name">Bank: <span class="bold_text">Union Bank of India</span></div>
+            <div class="Branch">Branch: <span class="bold_text">Velandipalayam</span></div>
+            <div class="IFSC-code">Ifsc code: <span class="bold_text">UBIN0901130</span></div>
 
-
+        </div>
 
         <div class="wrapper">
             <div class="side-by-side">
@@ -225,6 +233,7 @@
                 <div class="box Certified_box">Certified that the GST on GTA service is Paid by the consignor or Consignee of the goods in terms of notification No 13/2017 Central tax (Rate) dt 28.06.2017 and that no input tax credit is availed by us</div>
             </div>
         </div>
+
 </div>
 </body>
 </html>

@@ -106,7 +106,8 @@ def tax_invoice_form(request):
             freight_billed_to= request.POST.get('freight')
             shipped_from= request.POST.get('shipped_from')
             GST_selection = request.POST.get('GSTselection')
-            
+            Invoice_number = request.POST.get('invoiceNumber')
+            dateInput = request.POST.get('dateInput')
             
             df=Filtered_df_first_submission
 
@@ -125,17 +126,17 @@ def tax_invoice_form(request):
             consignor_gstin=df4['consignor_gstin'].unique()[0]
             consignor_addr=df4['consignor_addr'].unique()[0]
             consignor_pincode=df4['consignor_pincode'].unique()[0]
-            consignor_state=df4['consignor_state'].unique()[0]
+            consignor_state=df4['consignor_state'].unique()[0].upper()
             from_city=df4['from_city'].unique()[0]
 
             consignee_gstin=df4['consignee_gstin'].unique()[0]
             consignee_addr=df4['consignee_addr'].unique()[0]
             consignee_pincode=df4['consignee_pincode'].unique()[0]
-            consignee_state=df4['consignee_state'].unique()[0]
+            consignee_state=df4['consignee_state'].unique()[0].upper()
             to_city=df4['to_city'].unique()[0]
 
-            consignor_addr_combined=consignor_addr.lower().capitalize()+" "+from_city.upper()+" "+consignor_pincode
-            consignee_addr_combined=consignee_addr.lower().capitalize()+" "+to_city.upper()+" "+consignee_pincode
+            consignor_addr_combined=consignor_addr.upper()+" "+from_city.upper()+" "+consignor_pincode
+            consignee_addr_combined=consignee_addr.upper()+" "+to_city.upper()+" "+consignee_pincode
 
             df4['LR_weight']=df4['LR_weight'].astype(int)
             df4['total_amount']=df4['total_amount'].astype(int)
@@ -144,7 +145,7 @@ def tax_invoice_form(request):
             total_amount=df4['total_amount'].sum()
 
             words = number_to_words(total_amount)
-            word_expand=words.capitalize() + " only"
+            word_expand=words.upper() + " ONLY"
 
             if GST_selection=='Withinstate':
                 CGST_RATE='2.5%'
@@ -159,16 +160,16 @@ def tax_invoice_form(request):
                 IGST_RATE=''
                 IGST_AMOUNT=''
 
-                GST_words = number_to_words(total_amount)
-                GST_word_expand=GST_words.capitalize() + " only"
+                GST_words = number_to_words(TOTAL_AMOUNT_GST)
+                GST_word_expand=GST_words.upper() + " ONLY"
                 
             elif GST_selection=='Outsidestate':
                 IGST_RATE='5%'
                 IGST_AMOUNT=(5/100)*total_amount
                 IGST_AMOUNT=round(IGST_AMOUNT,2)
                 TOTAL_AMOUNT_GST=IGST_AMOUNT
-                GST_words = number_to_words(total_amount)
-                GST_word_expand=GST_words.capitalize() + " only"
+                GST_words = number_to_words(TOTAL_AMOUNT_GST)
+                GST_word_expand=GST_words.upper() + " ONLY"
                 CGST_RATE=''
                 SGST_RATE=''
                 CGST_AMOUNT=''
@@ -189,12 +190,22 @@ def tax_invoice_form(request):
             final_df['stat_chg']=final_df['stat_chg'].map("{:.2f}".format)
             
             records = final_df.to_dict(orient='records')
-            
+
+            if df4['Company'].unique()[0]=='Sreeman':
+                Company_Name_Display='SREEMAN TRANSPORTS'
+                Account_No='560371000618063'
+            elif df4['Company'].unique()[0]=='Suriya':
+                Company_Name_Display='SURIYA CARRIERS'
+                Account_No='560371000618087'
+            else:
+                print('Company not listed')
             context = {
                         'freight_billed_to': freight_billed_to,
                         'shipped_from': shipped_from,
                         'company_name':Company_name,
                         'records':records,
+                        'Invoice_number':Invoice_number,
+                        'dateInput':dateInput,
                         'consignor_gstin':consignor_gstin,
                         'consignee_gstin':consignee_gstin,
                         'consignor_addr_combined':consignor_addr_combined,
@@ -213,6 +224,8 @@ def tax_invoice_form(request):
                         'IGST_AMOUNT':IGST_AMOUNT,
                         'TOTAL_AMOUNT_GST':TOTAL_AMOUNT_GST,
                         'GST_word_expand':GST_word_expand,
+                        'Company_Name_Display':Company_Name_Display,
+                        'Account_No':Account_No,
                         'Prepared_by':Prepared_by
                         }
 
