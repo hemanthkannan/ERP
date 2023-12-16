@@ -241,6 +241,13 @@ def print_invoice(request,context):
 
     return render(request, 'invoice.html',context)
 
+def check(request):
+    friend = "hi"
+    context = {'friend': friend}
+
+    return render(request, 'check.html',context)
+
+
 
 
 

@@ -20,7 +20,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ERP.views import LR_VIEW,invoice_view,tax_invoice_form,print_invoice
+from ERP.views import LR_VIEW,invoice_view,tax_invoice_form,print_invoice,check
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('invoice/', invoice_view, name='invoice'),
     path('taxinvoiceform/', tax_invoice_form, name='tax_invoice_form'),
     path('print_invoice/', print_invoice, name='print_invoice'),
+    path('check/', check, name='check')
 ]
