@@ -1,0 +1,22 @@
+.titleword_box {
+    /* Your styling for the container */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.amounttitle, .amountwords {
+    /* Shared styling for both spans */
+    font-weight: bold;
+    color: #333;
+}
+
+.amounttitle {
+    /* Specific styling for the "friend" case */
+    text-align: center;
+}
+
+.amountwords {
+    /* Specific styling for the "not friend" case */
+    text-align: right;
+}
