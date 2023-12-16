@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/check.css' %}">
+    <title>Centered Text</title>
+</head>
+<body>
+
+    <div class="titleword_box">
+        {% if friend == 'friend' %}
+            <span class="amounttitle">Amount Chargable (in words) Rupees</span>
+        {% else %}
+            <span class="amountwords">word_expand</span>
+        {% endif %}
+    </div>
+
+</body>
+</html>
