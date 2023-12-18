@@ -1,0 +1,4 @@
+git add -u 
+
+The command git add -u is used to stage changes to tracked files.
+Specifically, it stages modifications and deletions, but not untracked files. 

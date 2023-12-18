@@ -114,6 +114,7 @@
   .All-text{
     font-weight:bold;
     font-size:13px;
+    
   
   }
   
@@ -319,6 +320,13 @@
     border-left:none;
 }
 
+.invoice-table tbody tr td.Rate-cell,
+.invoice-table tbody tr td.Statchg-cell,
+.invoice-table tbody tr td.Total-cell
+{
+  text-align: end;
+  
+}
 
 .invoice-table tfoot tr td {
     font-weight:bold;
@@ -332,7 +340,7 @@
 .invoice-table tfoot tr td:first-child{
     border-left:none;
     text-align: left;
-    background-color: aqua;
+    
 }
 
 
@@ -345,6 +353,10 @@
   border-left:none;
   text-align: right;
   padding-right:10px;
+}
+
+.invoice-table tfoot tr td:last-child{
+  text-align: right;
 }
 
 .Amount_word_container{
@@ -360,13 +372,13 @@
 }
 
 .amountwords-container{
-  flex:0.2;
+  flex:0.6;
   border-right:none;
-  
+  padding-left:5px;
 }
 
 .amounttitle-container{
-  flex:0.8;
+  flex:0.4;
 }
 
 .GST_TABLE{
@@ -426,6 +438,8 @@
 
 .amountwords-container{
   border-right:none;
+  font-weight: bold;
+  font-size:9px;
 }
 
 .Reverse_charge{
@@ -434,8 +448,25 @@
   border-right:none;
   border-left:none;
   font-size:13px;
+  text-align:left;
+  
 }
 
+.Bank_info{
+  font-size:12px;
+  margin-top: 25px;
+  margin-left:10px;
+}
+
+
+.bold_text{
+  font-weight:bold;
+}
+
+.Bank-details {
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 .wrapper {
   position: fixed;

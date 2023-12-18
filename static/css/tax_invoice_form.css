@@ -18,7 +18,9 @@ h1 {
 .company-section,
 .date-section,
 .gst-section,
-.invoice-details {
+.invoice-details,
+.gst-supplyofservice-section
+{
     display: grid;
     grid-template-columns: 2fr;
     grid-gap: 10px;
@@ -43,6 +45,11 @@ h1 {
 .invoice-details {
     background-color: #dcffdc; /* Light Green */
 }
+
+.gst-supplyofservice-section {
+    background-color: blue /* Light Blue */
+}
+
 
 /* Adjustments to input fields */
 input[type="text"],
