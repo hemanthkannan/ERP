@@ -143,18 +143,27 @@
                 {% if SOS_selection == 'FCM' and GST_selection == 'Withinstate' %}
                     <tfoot1>
                         <tr>
+<<<<<<< HEAD
                             <td class="sgst-display" colspan="8" align="center">SGST 2.5%</td>
+=======
+                            <td colspan="8" align="right">SGST 2.5%</td>
+>>>>>>> 2eb94b5162728b8f5cbc4ec49850333746a79e5e
                             <td>{{ SGST_AMOUNT }}</td>
                         </tr>
                     </tfoot1>
 
                     <tfoot2>
                         <tr>
+<<<<<<< HEAD
                             <td class="cgst-display" colspan="8" align="right">CGST 2.5%</td>
+=======
+                            <td colspan="8" align="right">CGST 2.5%</td>
+>>>>>>> 2eb94b5162728b8f5cbc4ec49850333746a79e5e
                             <td>{{ CGST_AMOUNT }}</td>
                         </tr>
                     </tfoot2>
 
+<<<<<<< HEAD
                     <tfoot4>
                         <tr>
                             <td class="roundoff-display" colspan="8" align="right">Round off</td>
@@ -162,15 +171,22 @@
                         </tr>
                     </tfoot4>
                     
+=======
+>>>>>>> 2eb94b5162728b8f5cbc4ec49850333746a79e5e
                 {% elif SOS_selection == 'FCM' and GST_selection == 'Outsidestate' %}
 
                     <tfoot3>
                         <tr>
+<<<<<<< HEAD
                             <td class="igst-display" colspan="8" align="right">IGST 5%</td>
+=======
+                            <td colspan="8" align="right">IGST 5%</td>
+>>>>>>> 2eb94b5162728b8f5cbc4ec49850333746a79e5e
                             <td>{{ IGST_AMOUNT }}</td>
                         </tr>
                     </tfoot3>
 
+<<<<<<< HEAD
                     <tfoot4>
                         <tr>
                             <td class="roundoff-display" colspan="8" align="right">Round off</td>
@@ -182,6 +198,10 @@
                 {% endif %}
 
 
+=======
+                {% endif %}
+
+>>>>>>> 2eb94b5162728b8f5cbc4ec49850333746a79e5e
                 <tfoot>
                     <tr>
                         {% if SOS_selection == 'FCM' %}

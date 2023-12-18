@@ -359,6 +359,10 @@ padding-right:10px;
 text-align: right;
 }
 
+.invoice-table tfoot tr td:last-child{
+  text-align: right;
+}
+
 .Amount_word_container{
 display:flex;
 }
@@ -458,6 +462,21 @@ margin-top: 25px;
 margin-left:10px;
 }
 
+.Bank_info{
+  font-size:12px;
+  margin-top: 25px;
+  margin-left:10px;
+}
+
+
+.bold_text{
+  font-weight:bold;
+}
+
+.Bank-details {
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 .bold_text{
 font-weight:bold;
