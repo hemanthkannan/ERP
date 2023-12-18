@@ -201,6 +201,8 @@ def tax_invoice_form(request):
             final_df['lr_hire_date'] = final_df['lr_hire_date'].dt.strftime('%d-%m-%Y')
             final_df['LR_Rate']=final_df['LR_Rate'].map("{:.2f}".format)
             final_df['total_amount']=final_df['total_amount'].map("{:.2f}".format)
+            
+            total_amount=round(total_amount)
             total_amount = "{:.2f}".format(total_amount)
             final_df['stat_chg']=final_df['stat_chg'].map("{:.2f}".format)
             
@@ -216,7 +218,7 @@ def tax_invoice_form(request):
                 print('Company not listed')
 
 
-
+            
             print('---------------->after loopinglooping',IGST_AMOUNT)
             print('---------------->after loopinglooping',IGST_RATE)
             

@@ -143,32 +143,52 @@
                 {% if SOS_selection == 'FCM' and GST_selection == 'Withinstate' %}
                     <tfoot1>
                         <tr>
-                            <td colspan="8" align="right">SGST 2.5%</td>
+                            <td class="sgst-display" colspan="8" align="center">SGST 2.5%</td>
                             <td>{{ SGST_AMOUNT }}</td>
                         </tr>
                     </tfoot1>
 
                     <tfoot2>
                         <tr>
-                            <td colspan="8" align="right">CGST 2.5%</td>
+                            <td class="cgst-display" colspan="8" align="right">CGST 2.5%</td>
                             <td>{{ CGST_AMOUNT }}</td>
                         </tr>
                     </tfoot2>
 
+                    <tfoot4>
+                        <tr>
+                            <td class="roundoff-display" colspan="8" align="right">Round off</td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot4>
+                    
                 {% elif SOS_selection == 'FCM' and GST_selection == 'Outsidestate' %}
 
                     <tfoot3>
                         <tr>
-                            <td colspan="8" align="right">IGST 5%</td>
+                            <td class="igst-display" colspan="8" align="right">IGST 5%</td>
                             <td>{{ IGST_AMOUNT }}</td>
                         </tr>
                     </tfoot3>
 
+                    <tfoot4>
+                        <tr>
+                            <td class="roundoff-display" colspan="8" align="right">Round off</td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot4>
+                    
+
                 {% endif %}
+
 
                 <tfoot>
                     <tr>
-                        <td colspan="3" align="right">RCM 5%</td>
+                        {% if SOS_selection == 'FCM' %}
+                            <td colspan="3" align="right"></td>
+                        {% elif SOS_selection == 'RCM' %}
+                            <td colspan="3" align="right">RCM 5%</td>
+                        {% endif %}
                         <td> TOTAL </td>
                         <td> {{LR_no_of_packages}} </td>
                         <td> {{LR_weight}} </td>
@@ -225,13 +245,15 @@
             </tfoot>
         </table>
 
-        <div class="Tax_word_container">
-            <div class="Taxword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
-            <div class="Taxword_box amountwords-container">{{GST_word_expand}}</div>
+        <div class="Amount_word_container">
+            <div class="titleword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
+            <div class="titleword_box amountwords-container">{{GST_word_expand}}</div>
         </div>
 
-        <div class="Reverse_charge">Amount of Tax Subjeft to Reverse Charge</div>
-        
+        {% if SOS_selection == 'RCM' %}
+            <div class="Reverse_charge">Amount of Tax Subjeft to Reverse Charge</div>
+        {% endif %}
+
         <div class="Bank_info">
             <div class="Bank-details">Bank Details:</div>
             <div class="Account-name">Account name: <span class="bold_text">{{Company_Name_Display}}</span></div>

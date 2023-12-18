@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-import pyodbc
+import pyodbc as pc
 import pandas as pd
 import datetime
 
@@ -7,6 +7,23 @@ class YourAppConfig(AppConfig):
     name = 'ERP'
 
     def ready(self):
+
+        print('***ready to setup connection***')
+        databaseName = 'sreeman_live'
+        username = 'sa'
+        password = 'Hemanth@123'
+        server = 'DESKTOP-L57QDTP\SQLEXPRESS'
+        driver= '{SQL Server Native Client 10.0}'
+        CONNECTION_STRING = 'DRIVER='+driver+';SERVER='+server+';DATABASE='+databaseName+';UID='+username+';PWD='+ password
+
+        databaseName1 = 'suriya_live'
+        username1 = 'sa'
+        password1 = 'Hemanth@123'
+        server1 = 'DESKTOP-L57QDTP\SQLEXPRESS'
+        driver1= '{SQL Server Native Client 10.0}'
+        CONNECTION_STRING2 = 'DRIVER='+driver1+';SERVER='+server1+';DATABASE='+databaseName1+';UID='+username1+';PWD='+ password1
+        
+        """
         print('***ready to setup connection***')
         # Set up the connections
         databaseName = 'sreeman_live'
@@ -22,10 +39,10 @@ class YourAppConfig(AppConfig):
         server1 = 'SREEMAN-NEW'
         driver1 = '{SQL Server Native Client 10.0}'
         CONNECTION_STRING2 = 'DRIVER=' + driver1 + ';SERVER=' + server1 + ';DATABASE=' + databaseName1 + ';UID=' + username1 + ';PWD=' + password1
-
+        """
         # Create/Open connections
-        conn = pyodbc.connect(CONNECTION_STRING)
-        conn1 = pyodbc.connect(CONNECTION_STRING2)
+        conn = pc.connect(CONNECTION_STRING)
+        conn1 = pc.connect(CONNECTION_STRING2)
 
         # Execute SQL queries and create DataFrames
         sql = "SELECT * FROM DBO.Sreeman_full_data_view"
@@ -40,7 +57,7 @@ class YourAppConfig(AppConfig):
         df_sreeman['Company'] = 'Sreeman'
         df_suriya['Company'] = 'Suriya'
 
-        df = df_sreeman.append(df_suriya)
+        df = pd.concat([df_sreeman, df_suriya], ignore_index=True)
 
         def date_ext_mon1(mon):
             datee = datetime.datetime.strptime(mon, "%Y-%m-%d")

@@ -2,3 +2,15 @@ git add -u
 
 The command git add -u is used to stage changes to tracked files.
 Specifically, it stages modifications and deletions, but not untracked files. 
+
+Fetch Changes: Start by fetching the latest changes from the remote repository:
+git fetch
+
+Identify Modified Files: Use git diff to see which files have been modified between your current branch and the origin/main branch:
+git diff --name-only origin/master
+
+Pull Modified Files: Once you've identified the modified files, you can use git checkout to pull these modified files from the origin/main branch into your current branch:
+git checkout origin/main -- .
+
+Commit Changes (if needed): After pulling the modified files, you might want to commit these changes to your branch:
+git commit -m "Pulled modified files from origin/main"
