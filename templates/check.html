@@ -9,6 +9,55 @@
 </head>
 <body>
 
+    <div class="flex-container">
+        <table class="invoice-table">
+            <!-- Table header row -->
+            <thead>
+
+                <tr>
+                    <!-- Dynamic headers set in HTML -->
+                    <th class="SNo-Header">S.No</th>
+                    <th class="Date-Header">L.R Date</th>
+                    <th class="LRNo-Header">L.R No</th>
+                    <th class="Vehicle-Header">Vehicle No</th>
+                    <th class="Article-Header">Articles</th>
+                    <th class="Weight-Header">Weight</th>
+                    <th class="Rate-Header">Rate</th>
+                    <th class="Stat-Header">Stat Chg</th>
+                    <th class="Total-Header">Total Amount</th>
+                </tr>
+            </thead>
+
+            <!-- Iterate through records and display employee data -->
+            {% for invoice in records %}
+            <tbody>
+                <tr>
+                    <!-- Data from records with different styles and sizing -->
+                    <td class="id-cell">1</td>
+                    <td class="date-cell">2</td>
+                    <td class="LRNo-cell">{{ invoice.lr_number}}</td>
+                    <td class="Vehicle-cell">3</td>
+                    <td class="Article-cell">4</td>
+                    <td class="Weight-cell">5</td>
+                    <td class="Rate-cell">6</td>
+                    <td class="Statchg-cell">7</td>
+                    <td class="Total-cell">8</td>
+                    
+                </tr>
+            </tbody>
+            {% endfor %}
+            <tfoot>
+                <tr>
+                    <td colspan="3" align="right">RCM 5%</td>
+                    <td> TOTAL </td>
+                    <td> 233 </td>
+                    <td> 75675 </td>
+                    <td colspan="4" align="right">676 </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
     <div class="titleword_box">
         {% if friend == 'friend' %}
             <span class="amounttitle">Amount Chargable (in words) Rupees</span>

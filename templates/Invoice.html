@@ -140,6 +140,32 @@
                     </tr>
                 </tbody>
                 {% endfor %}
+                {% if SOS_selection == 'FCM' and GST_selection == 'Withinstate' %}
+                    <tfoot1>
+                        <tr>
+                            <td colspan="8" align="right">SGST 2.5%</td>
+                            <td>{{ SGST_AMOUNT }}</td>
+                        </tr>
+                    </tfoot1>
+
+                    <tfoot2>
+                        <tr>
+                            <td colspan="8" align="right">CGST 2.5%</td>
+                            <td>{{ CGST_AMOUNT }}</td>
+                        </tr>
+                    </tfoot2>
+
+                {% elif SOS_selection == 'FCM' and GST_selection == 'Outsidestate' %}
+
+                    <tfoot3>
+                        <tr>
+                            <td colspan="8" align="right">IGST 5%</td>
+                            <td>{{ IGST_AMOUNT }}</td>
+                        </tr>
+                    </tfoot3>
+
+                {% endif %}
+
                 <tfoot>
                     <tr>
                         <td colspan="3" align="right">RCM 5%</td>
@@ -149,6 +175,8 @@
                         <td colspan="4" align="right">{{total_amount}} </td>
                     </tr>
                 </tfoot>
+
+                
             </table>
         </div>
 

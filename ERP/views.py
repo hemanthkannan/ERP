@@ -57,7 +57,6 @@ def number_to_words(number):
     words = words.replace(',', '')  # Remove the comma
     return words
 
-
 def tax_invoice_form(request):
 
     # Access the DataFrame defined in AppConfig
@@ -108,6 +107,7 @@ def tax_invoice_form(request):
             GST_selection = request.POST.get('GSTselection')
             Invoice_number = request.POST.get('invoiceNumber')
             dateInput = request.POST.get('dateInput')
+            SOS_selection = request.POST.get('GST-supplyofsrevice-selection')
             
             df=Filtered_df_first_submission
 
@@ -122,7 +122,7 @@ def tax_invoice_form(request):
             df4['total_amount']=round((df4["LR_weight"]*df4["LR_Rate"])+df4["stat_chg"])
 
 
-            df4.to_excel('sdfsd.xlsx')
+            #df4.to_excel('sdfsd.xlsx')
             consignor_gstin=df4['consignor_gstin'].unique()[0]
             consignor_addr=df4['consignor_addr'].unique()[0]
             consignor_pincode=df4['consignor_pincode'].unique()[0]
@@ -147,6 +147,7 @@ def tax_invoice_form(request):
             words = number_to_words(total_amount)
             word_expand=words.upper() + " ONLY"
 
+
             if GST_selection=='Withinstate':
                 CGST_RATE='2.5%'
                 SGST_RATE='2.5%'
@@ -162,12 +163,14 @@ def tax_invoice_form(request):
 
                 GST_words = number_to_words(TOTAL_AMOUNT_GST)
                 GST_word_expand=GST_words.upper() + " ONLY"
-                
+
+
             elif GST_selection=='Outsidestate':
                 IGST_RATE='5%'
                 IGST_AMOUNT=(5/100)*total_amount
                 IGST_AMOUNT=round(IGST_AMOUNT,2)
                 TOTAL_AMOUNT_GST=IGST_AMOUNT
+                print('---------------->looping',TOTAL_AMOUNT_GST)
                 GST_words = number_to_words(TOTAL_AMOUNT_GST)
                 GST_word_expand=GST_words.upper() + " ONLY"
                 CGST_RATE=''
@@ -176,6 +179,18 @@ def tax_invoice_form(request):
                 SGST_AMOUNT=''
             else:
                 print("the selection ofGST was not done")
+
+        
+            if SOS_selection=='FCM':
+                print('---------------->',SOS_selection)
+                print('---------------->',TOTAL_AMOUNT_GST)
+                total_amount=total_amount+TOTAL_AMOUNT_GST
+                print('here**********',total_amount)
+            elif SOS_selection=='RCM':
+                total_amount=total_amount
+            else:
+                print("select the suply of service")
+
 
             Prepared_by = request.POST.get('prepared_by')
 
@@ -199,6 +214,12 @@ def tax_invoice_form(request):
                 Account_No='560371000618087'
             else:
                 print('Company not listed')
+
+
+
+            print('---------------->after loopinglooping',IGST_AMOUNT)
+            print('---------------->after loopinglooping',IGST_RATE)
+            
             context = {
                         'freight_billed_to': freight_billed_to,
                         'shipped_from': shipped_from,
@@ -226,7 +247,9 @@ def tax_invoice_form(request):
                         'GST_word_expand':GST_word_expand,
                         'Company_Name_Display':Company_Name_Display,
                         'Account_No':Account_No,
-                        'Prepared_by':Prepared_by
+                        'Prepared_by':Prepared_by,
+                        'SOS_selection':SOS_selection,
+                        'GST_selection':GST_selection
                         }
 
 
@@ -236,10 +259,11 @@ def tax_invoice_form(request):
 
     return render(request, 'Tax_invoice_form.html')
 
-     
+  
 def print_invoice(request,context):
 
     return render(request, 'invoice.html',context)
+    
 
 def check(request):
     friend = "hi"
