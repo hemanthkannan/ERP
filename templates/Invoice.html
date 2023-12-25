@@ -18,26 +18,25 @@
         <div class="flex-container">
             <div class="flex-box Suriya-Carriers-Box">
                 <div class="suriya_inner-container">
-                    <div class="suriya-flex Comapany-name">SURIYA CARRIERS</div>
+                    <div class="suriya-flex Comapany-name">{{Company_Name_Display}}</div>
                     <div class="suriya-flex Comapany-GSTIN">GSTIN/UIN: <span class="All-text">33AIHPK0371R2ZY</span></div>
                     <div class="suriya-flex Comapany-PAN">PAN IT NO: <span class="All-text">AIHPK0371R</span></div>
 
                 </div>
                 <div class="suriya_inner-container">
-                    <div class="suriya-flex  Comapany-Address">No: 66/1A, Kannusamy Street,Sanganoor Main Road, Rathinapuri(P.O), Coimbatore-641027</div>
+                    <div class="suriya-flex  Comapany-Address">No: 66/1A, Kannusamy Street, Sanganoor Main Road, Rathinapuri(P.O), Coimbatore-641027</div>
                 </div>
             </div>
             
             <div class="flex-box Invoice-Number-Box">
                 <div class="Invoice-Inner-Container">
-                    <div class="Invoice-flex Invoice-Date">Dated: <span class="All-text">{{dateInput}}</span></div>
+                    <div class="Invoice-flex Invoice-Date">Dated: <span class="All-datetext">{{formatted_date}}</span></div>
                     <div class="Invoice-flex Comapany-Invoice_Title">Invoice Number</div>
                     <div class="Invoice-flex Comapany-Invoice_No">{{Invoice_number}}</div>
                 </div>
             </div>
         </div>
 
-       
         <div class="flex-container">
             <div class="flex-box Freigt-billedto-box">
                 <div class="ClientName-container">
@@ -143,7 +142,7 @@
                 {% if SOS_selection == 'FCM' and GST_selection == 'Withinstate' %}
                     <tfoot1>
                         <tr>
-                            <td class="sgst-display" colspan="8" align="center">SGST 2.5%</td>
+                            <td class="sgst-display" colspan="8" align="right">SGST 2.5%</td>
                             <td>{{ SGST_AMOUNT }}</td>
                         </tr>
                     </tfoot1>
@@ -158,10 +157,10 @@
                     <tfoot4>
                         <tr>
                             <td class="roundoff-display" colspan="8" align="right">Round off</td>
-                            <td>0.00</td>
+                            <td>{{round_off_data}}</td>
                         </tr>
                     </tfoot4>
-                    
+
                 {% elif SOS_selection == 'FCM' and GST_selection == 'Outsidestate' %}
 
                     <tfoot3>
@@ -174,13 +173,12 @@
                     <tfoot4>
                         <tr>
                             <td class="roundoff-display" colspan="8" align="right">Round off</td>
-                            <td>0.00</td>
+                            <td>{{round_off_data}}</td>
                         </tr>
                     </tfoot4>
                     
 
                 {% endif %}
-
 
                 <tfoot>
                     <tr>
@@ -189,7 +187,7 @@
                         {% elif SOS_selection == 'RCM' %}
                             <td colspan="3" align="right">RCM 5%</td>
                         {% endif %}
-                        <td> TOTAL </td>
+                       <td> TOTAL </td>
                         <td> {{LR_no_of_packages}} </td>
                         <td> {{LR_weight}} </td>
                         <td colspan="4" align="right">{{total_amount}} </td>
@@ -201,7 +199,7 @@
         </div>
 
         <div class="Amount_word_container">
-            <div class="titleword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
+            <div class="titleword_box amounttitle-container">Amount Chargeable (in words) Rupees</div> 
             <div class="titleword_box amountwords-container">{{word_expand}}</div>
         </div>
 
@@ -233,7 +231,7 @@
             <tfoot>
                 <tr>
                     <td>9965</td>
-                    <td>{{total_amount}}</td>
+                    <td>{{Initial_total_amount}}</td>
                     <td>{{CGST_RATE}}</td>
                     <td>{{CGST_AMOUNT}}</td>
                     <td>{{SGST_RATE}}</td>
@@ -245,16 +243,16 @@
             </tfoot>
         </table>
 
-        <div class="Amount_word_container">
-            <div class="titleword_box amounttitle-container">Amount Chargable (in words) Rupees</div> 
+        <div class="Tax_word_container">
+            <div class="titleword_box amounttitle-container">Amount Chargeable (in words) Rupees</div> 
             <div class="titleword_box amountwords-container">{{GST_word_expand}}</div>
         </div>
 
         {% if SOS_selection == 'RCM' %}
-            <div class="Reverse_charge">Amount of Tax Subjeft to Reverse Charge</div>
+            <div class="Reverse_charge">Amount of Tax Subject to Reverse Charge</div>
         {% endif %}
 
-        <div class="Bank_info">
+       <div class="Bank_info">
             <div class="Bank-details">Bank Details:</div>
             <div class="Account-name">Account name: <span class="bold_text">{{Company_Name_Display}}</span></div>
             <div class="Account-no">Account no: <span class="bold_text">{{Account_No}}</span></div>
@@ -280,7 +278,7 @@
                 </div>
             </div>
             <div class="full-width">
-                <div class="box Certified_box">Certified that the GST on GTA service is Paid by the consignor or Consignee of the goods in terms of notification No 13/2017 Central tax (Rate) dt 28.06.2017 and that no input tax credit is availed by us</div>
+                <div class="box Certified_box">Certified that the GST on GTA Service is Paid by the Consignor or Consignee of the goods in terms of Notification No. 13/2017 Central Tax (Rate) dt 28.06.2017 and that no Input Tax Credit is availed by us.</div>
             </div>
         </div>
 

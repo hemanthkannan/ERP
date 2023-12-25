@@ -6,6 +6,7 @@ from django.template import loader
 from django.template.loader import get_template
 from django.template import Context
 import inflect
+from datetime import datetime
 
 
 def LR_VIEW(request):
@@ -143,10 +144,9 @@ def tax_invoice_form(request):
             LR_no_of_packages=df4['LR_no_of_packages'].sum()
             LR_weight=df4['LR_weight'].sum()
             total_amount=df4['total_amount'].sum()
+            Initial_total_amount=total_amount
 
-            words = number_to_words(total_amount)
-            word_expand=words.upper() + " ONLY"
-
+            
 
             if GST_selection=='Withinstate':
                 CGST_RATE='2.5%'
@@ -161,8 +161,7 @@ def tax_invoice_form(request):
                 IGST_RATE=''
                 IGST_AMOUNT=''
 
-                GST_words = number_to_words(TOTAL_AMOUNT_GST)
-                GST_word_expand=GST_words.upper() + " ONLY"
+                GST_word_expand=number_to_words_indian(TOTAL_AMOUNT_GST)
 
 
             elif GST_selection=='Outsidestate':
@@ -171,8 +170,7 @@ def tax_invoice_form(request):
                 IGST_AMOUNT=round(IGST_AMOUNT,2)
                 TOTAL_AMOUNT_GST=IGST_AMOUNT
                 print('---------------->looping',TOTAL_AMOUNT_GST)
-                GST_words = number_to_words(TOTAL_AMOUNT_GST)
-                GST_word_expand=GST_words.upper() + " ONLY"
+                GST_word_expand=number_to_words_indian(TOTAL_AMOUNT_GST)
                 CGST_RATE=''
                 SGST_RATE=''
                 CGST_AMOUNT=''
@@ -203,7 +201,14 @@ def tax_invoice_form(request):
             final_df['total_amount']=final_df['total_amount'].map("{:.2f}".format)
             
             total_amount=round(total_amount)
+            print('**************',total_amount)
+            # Example usage:
+            #number = 452454
+            word_expand = number_to_words_indian(total_amount)
             total_amount = "{:.2f}".format(total_amount)
+            
+           
+
             final_df['stat_chg']=final_df['stat_chg'].map("{:.2f}".format)
             
             records = final_df.to_dict(orient='records')
@@ -217,18 +222,25 @@ def tax_invoice_form(request):
             else:
                 print('Company not listed')
 
-
-            
+            # Parse the input date string
+            date_obj = datetime.strptime(dateInput, "%Y-%m-%d")
+            # Format the date object in the desired format
+            desired_format = "%d-%m-%Y"
+            formatted_date = date_obj.strftime(desired_format)
             print('---------------->after loopinglooping',IGST_AMOUNT)
             print('---------------->after loopinglooping',IGST_RATE)
             
-            context = {
+            var=TOTAL_AMOUNT_GST
+            rounder_var=round(var)
+            round_off_data=round(rounder_var-var,2)
+
+            context = { 
                         'freight_billed_to': freight_billed_to,
                         'shipped_from': shipped_from,
                         'company_name':Company_name,
                         'records':records,
                         'Invoice_number':Invoice_number,
-                        'dateInput':dateInput,
+                        'formatted_date':formatted_date,
                         'consignor_gstin':consignor_gstin,
                         'consignee_gstin':consignee_gstin,
                         'consignor_addr_combined':consignor_addr_combined,
@@ -237,6 +249,7 @@ def tax_invoice_form(request):
                         'consignee_state':consignee_state,
                         'LR_no_of_packages':LR_no_of_packages,
                         'LR_weight':LR_weight,
+                        'Initial_total_amount':Initial_total_amount,
                         'total_amount':total_amount,
                         'word_expand':word_expand,
                         'CGST_RATE':CGST_RATE,
@@ -247,6 +260,7 @@ def tax_invoice_form(request):
                         'IGST_AMOUNT':IGST_AMOUNT,
                         'TOTAL_AMOUNT_GST':TOTAL_AMOUNT_GST,
                         'GST_word_expand':GST_word_expand,
+                        'round_off_data':round_off_data,
                         'Company_Name_Display':Company_Name_Display,
                         'Account_No':Account_No,
                         'Prepared_by':Prepared_by,
@@ -261,7 +275,63 @@ def tax_invoice_form(request):
 
     return render(request, 'Tax_invoice_form.html')
 
-  
+
+def number_to_words_indian(number):
+    units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+    def convert_integer_part(number):
+        words = []
+        if number >= 10000000:
+            crores = number // 10000000
+            words.extend(convert_integer_part(crores))
+            words.append("crore")
+            number %= 10000000
+        if number >= 100000:
+            lakhs = number // 100000
+            words.extend(convert_integer_part(lakhs))
+            words.append("lakh")
+            number %= 100000
+        if number >= 1000:
+            thousands = number // 1000
+            words.extend(convert_integer_part(thousands))
+            words.append("thousand")
+            number %= 1000
+        if number >= 100:
+            hundreds = number // 100
+            words.append(units[hundreds])
+            words.append("hundred")
+            number %= 100
+        if number > 0:
+            if number < 20:
+                words.append(units[number])
+            else:
+                words.append(tens[number // 10])
+                if number % 10 > 0:
+                    words.append(units[number % 10])
+        return words
+
+    def convert_decimal_part(number):
+        words = []
+        decimal_digits = str(number).split(".")[1] if "." in str(number) else "0"
+        if decimal_digits != "00" and decimal_digits != "0":
+            words.append("and")
+            decimal_in_words = convert_integer_part(int(decimal_digits))
+            words.extend(decimal_in_words)
+            words.append("paise")
+        return words
+
+    words = []
+    integer_part, decimal_part = str(number).split(".") if "." in str(number) else (str(number), "0")
+    words.extend(convert_integer_part(int(integer_part)))
+    if decimal_part:  # Check if a decimal part exists
+        words.extend(convert_decimal_part(float("0." + decimal_part)))
+
+    return " ".join(words).capitalize() + " only"
+
+
+
 def print_invoice(request,context):
 
     return render(request, 'invoice.html',context)
@@ -272,9 +342,3 @@ def check(request):
     context = {'friend': friend}
 
     return render(request, 'check.html',context)
-
-
-
-
-
-

@@ -7,7 +7,7 @@ class YourAppConfig(AppConfig):
     name = 'ERP'
 
     def ready(self):
-
+        """
         print('***ready to setup connection***')
         databaseName = 'sreeman_live'
         username = 'sa'
@@ -39,7 +39,7 @@ class YourAppConfig(AppConfig):
         server1 = 'SREEMAN-NEW'
         driver1 = '{SQL Server Native Client 10.0}'
         CONNECTION_STRING2 = 'DRIVER=' + driver1 + ';SERVER=' + server1 + ';DATABASE=' + databaseName1 + ';UID=' + username1 + ';PWD=' + password1
-        """
+        
         # Create/Open connections
         conn = pc.connect(CONNECTION_STRING)
         conn1 = pc.connect(CONNECTION_STRING2)
